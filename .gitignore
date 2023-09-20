@@ -1,0 +1,5 @@
+*.a
+pipex
+.vscode/
+build/
+*.o
