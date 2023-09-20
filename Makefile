@@ -6,7 +6,7 @@
 #    By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 23:28:51 by ale-boud          #+#    #+#              #
-#    Updated: 2023/09/20 13:41:11 by ale-boud         ###   ########.fr        #
+#    Updated: 2023/09/21 01:28:46 by ale-boud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ LDFLAGS := -Llibft
 NAME := pipex
 
 SRC_DIR := ./
-SRCS := pipex.c utils.c main.c destroy.c init.c error.c exec.c
+SRCS := utils.c main.c destroy.c init.c error.c exec.c
 
 SRCS := $(SRCS:%=$(SRC_DIR)/%)
 OBJ_DIR := ./build

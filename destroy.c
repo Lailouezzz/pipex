@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:32:50 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/20 18:11:39 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 00:39:00 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,10 @@ static void	_destroy_execs(t_pipexctx *ctx)
 		++k;
 	}
 	free(ctx->cmdlines);
+}
+
+void	destroy(t_pipexctx *ctx)
+{
+	if (ctx->cmdlines != NULL)
+		_destroy_execs(ctx);
 }

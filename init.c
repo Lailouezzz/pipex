@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:33:55 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/20 18:11:46 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 00:40:07 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	_init_execs(t_pipexctx *ctx)
 {
 	size_t	k;
 
-	_init_execs_extr(ctx);
 	k = 0;
 	while (k < ctx->nbcmd)
 	{

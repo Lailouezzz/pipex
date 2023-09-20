@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 10:20:20 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/20 16:02:55 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 01:31:13 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*searchpath(char **env)
 {
-	while (*env != NULL && ft_strncmp("PATH", *env, 4) != 0)
+	while (*env != NULL && ft_strncmp("PATH=", *env, 5) != 0)
 		++env;
 	return (*env);
 }
