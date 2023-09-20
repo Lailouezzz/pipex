@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:39:11 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/20 18:25:28 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/20 18:39:27 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,6 @@ static noreturn void	_execpipex_child(t_pipexctx *ctx)
 			close(p.write);
 			p = (t_pipe){-1, -1};
 		}
-		if (k != 0)
-			if (pipe((int *)&p))
-				errorerrno(ctx);
-		if (k == 0)
-			dup2(_execpipex_open(ctx, ctx->f1, O_RDONLY))
-		if (k == ctx->nbcmd - 1)
-			dup2(_execpipex_open(ctx, ctx->f2, O_CREAT | O_WRONLY, 0777),
-				STDOUT_FILENO);
 	}
 }
 
