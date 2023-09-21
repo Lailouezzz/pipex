@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:33:55 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/21 00:40:07 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 13:57:01 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,16 @@ void	parse_arg(int argc, char **argv, char **envp, t_pipexctx *ctx)
 	ctx->cmdlines = NULL;
 	ctx->f2 = argv[argc - 1];
 	ctx->here_doc = ft_strcmp(argv[1], "here_doc") == 0;
-	ctx->cmds = argv + 2 + ctx->here_doc;
+	if (ctx->here_doc)
+		ctx->limiter = argv[2];
+	else
+		ctx->limiter = NULL;
+	ctx->cmds = argv + (2 + ctx->here_doc);
+	ctx->nbcmd = argc - (3 + ctx->here_doc);
 	ctx->f1 = argv[1];
-	ctx->nbcmd = argc - 3 - ctx->here_doc;
 	ctx->pn = argv[0];
+	ctx->infd = -1;
+	ctx->outfd = -1;
 	ctx->path = searchpath(envp);
 }
 
@@ -47,4 +53,10 @@ void	init(t_pipexctx *ctx)
 	if (ctx->cmdlines == NULL)
 		error(ctx, "malloc error");
 	_init_execs(ctx);
+	ctx->infd = dup(STDIN_FILENO);
+	if (ctx->infd == -1)
+		errorerrno(ctx);
+	ctx->outfd = dup(STDOUT_FILENO);
+	if (ctx->outfd == -1)
+		errorerrno(ctx);
 }

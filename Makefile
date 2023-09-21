@@ -6,7 +6,7 @@
 #    By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 23:28:51 by ale-boud          #+#    #+#              #
-#    Updated: 2023/09/21 02:55:35 by ale-boud         ###   ########.fr        #
+#    Updated: 2023/09/21 14:29:22 by ale-boud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,10 @@ RM := rm -f
 
 CC := gcc
 
-CWARN := all extra
+CWARN := all extra error
 CWARN := $(CWARN:%=-W%)
 
-CFLAGS := $(CWARN) -g3
+CFLAGS := $(CWARN)
 
 # Preprocessor flag
 
@@ -48,8 +48,8 @@ LDFLAGS := -Llibft
 NAME := pipex
 
 SRC_DIR := ./
-SRCS := utils.c main.c destroy.c init.c error.c exec.c execchild.c
-
+SRCS := utils.c main.c destroy.c init.c error.c exec.c execchild.c open.c \
+		gnl.c
 SRCS := $(SRCS:%=$(SRC_DIR)/%)
 OBJ_DIR := ./build
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

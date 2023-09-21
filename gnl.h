@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy.c                                          :+:      :+:    :+:   */
+/*   gnl.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 12:32:50 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/21 13:57:13 by ale-boud         ###   ########.fr       */
+/*   Created: 2023/05/10 12:10:58 by ale-boud          #+#    #+#             */
+/*   Updated: 2023/09/21 13:33:39 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef GNL_H
+# define GNL_H
 
-static void	_destroy_execs(t_pipexctx *ctx)
-{
-	size_t	k;
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 100
+# endif
 
-	k = 0;
-	while (k < ctx->nbcmd)
-	{
-		ft_split_free(ctx->cmdlines[k]);
-		++k;
-	}
-	free(ctx->cmdlines);
-}
+char	*gnl(int fd);
 
-void	destroy(t_pipexctx *ctx)
-{
-	if (ctx->cmdlines != NULL)
-		_destroy_execs(ctx);
-	if (ctx->infd != -1)
-		close(ctx->infd);
-	if (ctx->outfd != -1)
-		close(ctx->outfd);
-}
+#endif

@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 09:58:54 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/21 02:44:01 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 13:56:40 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <sys/wait.h>
 # include <ft_printf/ft_printf.h>
 
-typedef struct __attribute__((packed)) s_pipe
+typedef struct __attribute__((aligned(sizeof(int)))) s_pipe
 {
 	int	read;
 	int	write;
@@ -35,9 +35,12 @@ typedef struct s_pipexctx
 {
 	char		*pn;
 	int			here_doc;
+	char		*limiter;
 	char		*f1;
 	char		*f2;
 	size_t		nbcmd;
+	int			infd;
+	int			outfd;
 	char		**cmds;
 	char		***cmdlines;
 	char		*path;
@@ -79,6 +82,12 @@ int				execpipex(t_pipexctx *ctx);
  *	child
  */
 noreturn void	execpipex_child(t_pipexctx *ctx);
+
+/* open_f1 | open_f2
+ *	return fd read of f1 | fd write of f2
+ */
+int				open_f1(t_pipexctx *ctx);
+int				open_f2(t_pipexctx *ctx);
 
 /*
  *	HERROR HANDLING

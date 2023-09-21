@@ -6,25 +6,11 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 02:41:20 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/21 03:19:23 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 13:57:56 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-static int	_execpipex_open(t_pipexctx *ctx, const char *fn,
-		int mode, mode_t flag)
-{
-	int	fd;
-
-	if (flag != 0)
-		fd = open(fn, mode, flag);
-	else
-		fd = open(fn, mode);
-	if (fd == -1)
-		errorerrno(ctx);
-	return (fd);
-}
 
 static void	_execpipex_setinout(t_pipexctx *ctx, size_t k, t_pipe p)
 {
@@ -32,7 +18,7 @@ static void	_execpipex_setinout(t_pipexctx *ctx, size_t k, t_pipe p)
 
 	if (k == ctx->nbcmd -1)
 	{
-		fd = _execpipex_open(ctx, ctx->f2, O_CREAT | O_WRONLY, 0777);
+		fd = open_f2(ctx);
 		if (dup2(fd, STDOUT_FILENO) == -1)
 			errorerrno(ctx);
 		close(fd);
@@ -41,7 +27,7 @@ static void	_execpipex_setinout(t_pipexctx *ctx, size_t k, t_pipe p)
 		errorerrno(ctx);
 	if (k == 0)
 	{
-		fd = _execpipex_open(ctx, ctx->f1, O_RDONLY, 0);
+		fd = open_f1(ctx);
 		if (dup2(fd, STDIN_FILENO) == -1)
 			errorerrno(ctx);
 		close(fd);
@@ -63,6 +49,8 @@ static void	__execpipex_execute(t_pipexctx *ctx, char **cmdline)
 		free(path);
 		return ;
 	}
+	close(ctx->infd);
+	close(ctx->outfd);
 	execve(path, cmdline, ctx->envp);
 	free(path);
 	errorerrno(ctx);
@@ -115,5 +103,5 @@ noreturn void	execpipex_child(t_pipexctx *ctx)
 		_execpipex_execute(ctx, ctx->cmdlines[k], p, k);
 	}
 	destroy(ctx);
-	exit(EXIT_FAILURE);
+	exit(666);
 }
