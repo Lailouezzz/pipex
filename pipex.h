@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 09:58:54 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/21 01:55:13 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 02:44:01 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ void			destroy(t_pipexctx *ctx);
  *	return the status
  */
 int				execpipex(t_pipexctx *ctx);
+
+/* execpipexchlid
+ *	child
+ */
+noreturn void	execpipex_child(t_pipexctx *ctx);
 
 /*
  *	HERROR HANDLING
