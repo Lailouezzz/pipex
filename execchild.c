@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 02:41:20 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/21 13:57:56 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 15:03:13 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	__execpipex_execute(t_pipexctx *ctx, char **cmdline)
 	if (path == NULL)
 	{
 		ft_putstr_fd(ctx->pn, STDERR_FILENO);
-		ft_putstr_fd(": invalid command: ", STDERR_FILENO);
+		ft_putstr_fd(": command not found: ", STDERR_FILENO);
 		ft_putstr_fd(cmdline[0], STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
 		destroy(ctx);
@@ -66,7 +66,7 @@ static void	_execpipex_execute(t_pipexctx *ctx, char **cmdline,
 	{
 		__execpipex_execute(ctx, cmdline);
 		wait(&s);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 	pid = fork();
 	if (pid == -1)
@@ -76,7 +76,7 @@ static void	_execpipex_execute(t_pipexctx *ctx, char **cmdline,
 	close(p.write);
 	__execpipex_execute(ctx, cmdline);
 	wait(&s);
-	exit(EXIT_FAILURE);
+	exit(127);
 }
 
 noreturn void	execpipex_child(t_pipexctx *ctx)
