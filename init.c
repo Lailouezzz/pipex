@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:33:55 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/21 13:57:01 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:37:43 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	parse_arg(int argc, char **argv, char **envp, t_pipexctx *ctx)
 {
-	if (argc <= 4 || (ft_strcmp(argv[1], "here_doc") == 0 && argc <= 5))
+	if (argc <= 4
+		|| (ft_strcmp(argv[1], "here_doc") == 0 && argc != 6))
 		help(argv[0]);
 	ctx->envp = envp;
 	ctx->cmdlines = NULL;

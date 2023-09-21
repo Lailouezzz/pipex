@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 11:54:13 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/21 14:24:10 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:35:40 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static int	_here_doc(t_pipexctx *ctx)
 {
 	pid_t	pid;
 	t_pipe	p;
+	int		s;
 
 	if (pipe((int *)&p) == -1)
 		errorerrno(ctx);
@@ -60,6 +61,9 @@ static int	_here_doc(t_pipexctx *ctx)
 		_here_doc_child(ctx);
 	}
 	close(p.write);
+	wait(&s);
+	if (!WIFEXITED(s))
+		error(ctx, "here doc error");
 	return (p.read);
 }
 

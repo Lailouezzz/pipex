@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:01:03 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/20 13:54:30 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:40:41 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 noreturn void	help(char *pn)
 {
-	ft_printf("Usage: %s file1 cmd1 cmd[n]... file2\n", pn);
+	ft_printf("Usage: %s file1 cmd1 cmd[n]... file2\n\
+    OR %s here_doc LIMITER cmd1 cmd2 file\n", pn, pn);
 	exit(EXIT_SUCCESS);
 }
 
