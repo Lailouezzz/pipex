@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 11:54:13 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/21 15:09:17 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 15:13:58 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	open_f2(t_pipexctx *ctx)
 {
 	int	fd;
 
-	if (!ctx->here_doc && unlink(ctx->f2) == -1)
+	if (!ctx->here_doc && unlink(ctx->f2) == -1 && errno != ENOENT)
 		errorerrno(ctx);
 	fd = open(ctx->f2, O_CREAT
 			| O_WRONLY
