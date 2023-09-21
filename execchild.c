@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 02:41:20 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/21 02:48:13 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 03:03:45 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,37 @@ static void	_execpipex_setinout(t_pipexctx *ctx, size_t k, t_pipe p)
 	}
 }
 
-static noreturn void	__execpipex_execute(t_pipexctx *ctx, char **cmdline)
+static void	__execpipex_execute(t_pipexctx *ctx, char **cmdline)
 {
 	char	*path;
 
 	path = pathexpension(ctx->path, cmdline[0]);
 	if (path == NULL)
-		error(ctx, "invalid command");
+	{
+		ft_putstr_fd(ctx->pn, STDERR_FILENO);
+		ft_putstr_fd(": invalid command: ", STDERR_FILENO);
+		ft_putstr_fd(cmdline[0], STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+		free(path);
+		return ;
+	}
 	execve(path, cmdline, ctx->envp);
-	free(path);
 	errorerrno(ctx);
+	free(path);
 }
 
 static void	_execpipex_execute(t_pipexctx *ctx, char **cmdline,
 		t_pipe p, size_t k)
 {
 	pid_t	pid;
+	int		s;
 
 	if (k == 0)
+	{
 		__execpipex_execute(ctx, cmdline);
+		wait(&s);
+		exit(EXIT_FAILURE);
+	}
 	pid = fork();
 	if (pid == -1)
 		errorerrno(ctx);
@@ -74,6 +86,9 @@ static void	_execpipex_execute(t_pipexctx *ctx, char **cmdline,
 		return ;
 	close(p.write);
 	__execpipex_execute(ctx, cmdline);
+	fprintf(stderr, "WAIT...\n");
+	wait(&s);
+	fprintf(stderr, "WAITED\n");
 }
 
 noreturn void	execpipex_child(t_pipexctx *ctx)
@@ -97,6 +112,12 @@ noreturn void	execpipex_child(t_pipexctx *ctx)
 			if (pipe((int *)&p) == -1)
 				errorerrno(ctx);
 		_execpipex_setinout(ctx, k, p);
+		usleep(500000);
+		fprintf(stderr, "EXEC...\n");
+		usleep(500000);
 		_execpipex_execute(ctx, ctx->cmdlines[k], p, k);
+		usleep(500000);
+		fprintf(stderr, "EXECUTED\n");
+		usleep(500000);
 	}
 }

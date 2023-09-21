@@ -6,7 +6,7 @@
 #    By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 23:28:51 by ale-boud          #+#    #+#              #
-#    Updated: 2023/09/21 02:42:25 by ale-boud         ###   ########.fr        #
+#    Updated: 2023/09/21 02:55:35 by ale-boud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ fclean: clean
 
 # Rebuild
 
-re: clean all
+re: fclean all
 
 # Bonus
 
