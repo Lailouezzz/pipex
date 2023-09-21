@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:39:11 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/21 02:42:37 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 03:14:24 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ int	execpipex(t_pipexctx *ctx)
 	if (pid == 0)
 		execpipex_child(ctx);
 	wait(&s);
-	return (s);
+	return (WEXITSTATUS(s));
 }
