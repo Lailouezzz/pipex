@@ -6,7 +6,7 @@
 /*   By: ale-boud <ale-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:39:11 by ale-boud          #+#    #+#             */
-/*   Updated: 2023/09/21 01:53:49 by ale-boud         ###   ########.fr       */
+/*   Updated: 2023/09/21 02:37:42 by ale-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ static void	_execpipex_setinout(t_pipexctx *ctx, size_t k, t_pipe p)
 
 	if (k == ctx->nbcmd -1)
 	{
-		fd = _execpipex_open(ctx, ctx->f2, O_CREAT | O_RDONLY, 0777);
+		fd = _execpipex_open(ctx, ctx->f2, O_CREAT | O_WRONLY, 0777);
 		if (dup2(fd, STDOUT_FILENO) == -1)
 			errorerrno(ctx);
 		close(fd);
 	}
-	if (k != 0 && dup2(p.read, STDIN_FILENO) == -1)
+	if (k != 0 && dup2(p.read, STDIN_FILENO) == -1 && close(p.read) == -1)
 		errorerrno(ctx);
 	if (k == 0)
 	{
@@ -46,7 +46,6 @@ static void	_execpipex_setinout(t_pipexctx *ctx, size_t k, t_pipe p)
 			errorerrno(ctx);
 		close(fd);
 	}
-	close(p.read);
 }
 
 static noreturn void	__execpipex_execute(t_pipexctx *ctx, char **cmdline)
@@ -91,16 +90,14 @@ static void	_execpipex_child(t_pipexctx *ctx)
 		{
 			if (dup2(p.write, STDOUT_FILENO) == -1)
 				errorerrno(ctx);
-			close(p.write);
+			close(p.read);
 			p = (t_pipe){-1, -1};
 		}
 		if (k != 0)
 			if (pipe((int *)&p) == -1)
 				errorerrno(ctx);
 		_execpipex_setinout(ctx, k, p);
-		fprintf(stderr, "EXEC...\n");
 		_execpipex_execute(ctx, ctx->cmdlines[k], p, k);
-		usleep(50);
 	}
 }
 
